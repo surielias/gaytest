@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máy Test Độ Gay</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            font-size: 1.8em;
+            color: #555;
+            margin-bottom: 50px;
+            font-weight: bold;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            min-height: 100px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 20px 40px;
+            font-size: 1.3em;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-weight: bold;
+            min-width: 250px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-yes {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background: #45a049;
+        }
+
+        .btn-no {
+            background: #f44336;
+            color: white;
+            position: fixed;
+            transition: all 0.2s ease;
+        }
+
+        .result-page {
+            display: none;
+        }
+
+        .result-page.active {
+            display: block;
+        }
+
+        .result-text {
+            font-size: 2em;
+            color: #d32f2f;
+            font-weight: bold;
+            line-height: 1.6;
+            padding: 30px;
+            background: #ffebee;
+            border-radius: 15px;
+            border: 3px solid #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="questionPage">
+            <h1>🌈 Máy Test Độ Gay 🌈</h1>
+            <div class="question">Nam Nguyễn có gay không?</div>
+            <div class="buttons">
+                <button class="btn btn-yes" onclick="showResult()">Rất gay</button>
+                <button class="btn btn-no" id="btnNo" onclick="moveButton(event)">
+                    Nam là menly nhất
+                </button>
+            </div>
+        </div>
+
+        <div id="resultPage" class="result-page">
+            <h1>🎯 Kết Quả 🎯</h1>
+            <div class="result-text">
+                Nam đích thị là một thằng đĩ lồn chó đẻ.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isButtonMoved = false;
+
+        function showResult() {
+            document.getElementById('questionPage').style.display = 'none';
+            document.getElementById('resultPage').classList.add('active');
+        }
+
+        function moveButton(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const btn = document.getElementById('btnNo');
+            
+            // Lấy kích thước màn hình
+            const maxX = window.innerWidth - btn.offsetWidth - 20;
+            const maxY = window.innerHeight - btn.offsetHeight - 20;
+            
+            // Tạo vị trí ngẫu nhiên xa vị trí hiện tại
+            let randomX, randomY;
+            let attempts = 0;
+            
+            do {
+                randomX = Math.random() * maxX;
+                randomY = Math.random() * maxY;
+                attempts++;
+            } while (attempts < 10 && (
+                Math.abs(randomX - (btn.offsetLeft || 0)) < 200 || 
+                Math.abs(randomY - (btn.offsetTop || 0)) < 200
+            ));
+            
+            btn.style.position = 'fixed';
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+            
+            isButtonMoved = true;
+            
+            return false;
+        }
+    </script>
+</body>
+</html>
